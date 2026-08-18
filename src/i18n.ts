@@ -27,7 +27,7 @@ export const translations = {
     demo: 'Ver demo',
     legend: 'Leyenda',
     tapYear: 'Clic en un año para expandir sus meses',
-    dragHint: 'Arrastrá la línea para sintonizar',
+    dragHint: 'Arrastrá o usá la rueda para explorar',
     period: 'Periodo',
   },
   en: {
@@ -56,7 +56,7 @@ export const translations = {
     demo: 'View demo',
     legend: 'Legend',
     tapYear: 'Click a year to expand its months',
-    dragHint: 'Drag the line to tune',
+    dragHint: 'Drag or scroll to explore',
     period: 'Period',
   },
 } as const

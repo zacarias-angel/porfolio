@@ -1,59 +1,49 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { Project } from '../data/projects'
 import { useSettings } from '../settings'
 import { monthsFull } from '../i18n'
 
-const MONTH_GAP = 52
-const YEAR_GAP = 40
-const YEAR_SPAN = 12 * MONTH_GAP + YEAR_GAP
-const DOTS = 15
-
-type Tick = { x: number; kind: 'month' | 'year'; year: number; month: number }
-
-function buildTicks(years: number[]): Tick[] {
-  const ticks: Tick[] = []
-  years.forEach((year, i) => {
-    const base = i * YEAR_SPAN
-    for (let m = 1; m <= 12; m++) {
-      ticks.push({ x: base + (m - 1) * MONTH_GAP, kind: 'month', year, month: m })
-    }
-    ticks.push({ x: base + 12 * MONTH_GAP, kind: 'year', year, month: 12 })
-  })
-  return ticks
-}
+const ENTRY_GAP = 64
 
 type Props = {
   projects: Project[]
-  year: number | null
-  month: number | null
-  onChange: (year: number, month: number) => void
+  selectedId: string | null
+  onChange: (project: Project) => void
 }
 
-export default function Timeline({ projects, year, month, onChange }: Props) {
+export default function Timeline({ projects, selectedId, onChange }: Props) {
   const { t, lang } = useSettings()
 
-  const years = useMemo(() => [...new Set(projects.map((p) => p.year))].sort((a, b) => a - b), [projects])
-  const ticks = useMemo(() => buildTicks(years), [years])
-  const monthTicks = useMemo(() => ticks.filter((t) => t.kind === 'month'), [ticks])
-  const totalWidth = years.length * YEAR_SPAN
-
-  const projectMonths = useMemo(
-    () => new Set(projects.map((p) => `${p.year}-${p.month}`)),
+  const entries = useMemo(
+    () => [...projects].sort((a, b) => a.year - b.year || a.month - b.month),
     [projects],
   )
 
+  const totalWidth = Math.max(0, (entries.length - 1) * ENTRY_GAP)
+
   const viewportRef = useRef<HTMLDivElement>(null)
   const [viewW, setViewW] = useState(0)
-  const [offset, setOffset] = useState(0)
+  const [offset, setOffsetState] = useState(0)
+  const offsetRef = useRef(0)
   const draggingRef = useRef(false)
   const startRef = useRef({ x: 0, offset: 0 })
   const initializedRef = useRef(false)
   const committedRef = useRef<string | null>(null)
+  const wheelTimerRef = useRef<number | null>(null)
   const onChangeRef = useRef(onChange)
 
   useEffect(() => {
     onChangeRef.current = onChange
   })
+
+  const setOffset = useCallback(
+    (v: number) => {
+      const next = Math.min(totalWidth, Math.max(0, v))
+      offsetRef.current = next
+      setOffsetState(next)
+    },
+    [totalWidth],
+  )
 
   useLayoutEffect(() => {
     const el = viewportRef.current
@@ -65,67 +55,93 @@ export default function Timeline({ projects, year, month, onChange }: Props) {
     return () => ro.disconnect()
   }, [])
 
-  const clamp = (v: number) => Math.min(totalWidth, Math.max(0, v))
-
-  const findTickX = (y: number, m: number) => {
-    const idx = years.indexOf(y)
-    if (idx === -1) return 0
-    return idx * YEAR_SPAN + (m - 1) * MONTH_GAP
-  }
-
   useLayoutEffect(() => {
     if (viewW === 0 || initializedRef.current) return
     initializedRef.current = true
-    const latest = [...projects].sort((a, b) => b.year - a.year || b.month - a.month)[0]
-    if (latest) setOffset(clamp(findTickX(latest.year, latest.month)))
-  }, [viewW, years, projects])
+    if (entries.length > 0) setOffset((entries.length - 1) * ENTRY_GAP)
+  }, [viewW, entries, setOffset])
 
-  useEffect(() => {
-    if (draggingRef.current) return
-    if (year === null || month === null) return
-    setOffset(clamp(findTickX(year, month)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [year, month])
-
-  const activeTick = useMemo(() => {
-    if (monthTicks.length === 0) return null
-    let best = monthTicks[0]
+  const activeEntry = useMemo(() => {
+    if (entries.length === 0) return null
+    let best = entries[0]
     let bd = Infinity
-    for (const t of monthTicks) {
-      const d = Math.abs(t.x - offset)
+    entries.forEach((e, i) => {
+      const d = Math.abs(i * ENTRY_GAP - offset)
       if (d < bd) {
         bd = d
-        best = t
+        best = e
       }
-    }
+    })
     return best
-  }, [monthTicks, offset])
+  }, [entries, offset])
 
   useEffect(() => {
-    if (!activeTick) return
-    const key = `${activeTick.year}-${activeTick.month}`
-    if (committedRef.current === key) return
-    committedRef.current = key
-    onChangeRef.current(activeTick.year, activeTick.month)
-  }, [activeTick])
+    if (!activeEntry) return
+    if (committedRef.current === activeEntry.id) return
+    committedRef.current = activeEntry.id
+    onChangeRef.current(activeEntry)
+  }, [activeEntry])
+
+  useEffect(() => {
+    if (!selectedId) return
+    if (selectedId === committedRef.current) return
+    if (draggingRef.current) return
+    const idx = entries.findIndex((e) => e.id === selectedId)
+    if (idx === -1) return
+    committedRef.current = selectedId
+    setOffset(idx * ENTRY_GAP)
+  }, [selectedId, entries, setOffset])
+
+  const snap = useCallback(() => {
+    if (entries.length === 0) return
+    let idx = 0
+    let bd = Infinity
+    entries.forEach((e, i) => {
+      const d = Math.abs(i * ENTRY_GAP - offsetRef.current)
+      if (d < bd) {
+        bd = d
+        idx = i
+      }
+    })
+    setOffset(idx * ENTRY_GAP)
+  }, [entries, setOffset])
+
+  useEffect(() => {
+    const el = viewportRef.current
+    if (!el) return
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault()
+      const delta = (e.deltaY || e.deltaX) * 0.5
+      setOffset(offsetRef.current + delta)
+      if (wheelTimerRef.current !== null) window.clearTimeout(wheelTimerRef.current)
+      wheelTimerRef.current = window.setTimeout(snap, 140)
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => {
+      el.removeEventListener('wheel', onWheel)
+      if (wheelTimerRef.current !== null) window.clearTimeout(wheelTimerRef.current)
+    }
+  }, [setOffset, snap])
 
   const onPointerDown = (e: React.PointerEvent) => {
     draggingRef.current = true
-    startRef.current = { x: e.clientX, offset }
+    startRef.current = { x: e.clientX, offset: offsetRef.current }
     e.currentTarget.setPointerCapture(e.pointerId)
   }
 
   const onPointerMove = (e: React.PointerEvent) => {
     if (!draggingRef.current) return
     const delta = e.clientX - startRef.current.x
-    setOffset(clamp(startRef.current.offset - delta))
+    setOffset(startRef.current.offset - delta)
   }
 
   const onPointerUp = () => {
     if (!draggingRef.current) return
     draggingRef.current = false
-    if (activeTick) setOffset(clamp(activeTick.x))
+    snap()
   }
+
+  const activeId = activeEntry?.id ?? null
 
   return (
     <section className="border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
@@ -136,7 +152,7 @@ export default function Timeline({ projects, year, month, onChange }: Props) {
 
       <div
         ref={viewportRef}
-        className="relative mt-2 h-[72px] cursor-grab select-none overflow-hidden active:cursor-grabbing"
+        className="relative mt-2 h-[84px] cursor-grab select-none overflow-hidden active:cursor-grabbing"
         style={{ touchAction: 'none' }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
@@ -149,42 +165,41 @@ export default function Timeline({ projects, year, month, onChange }: Props) {
           <div className="absolute top-0 h-full" style={{ left: viewW / 2, width: totalWidth }}>
             <div className="absolute bottom-[12px] left-0 right-0 h-px bg-zinc-200 dark:bg-zinc-700" />
 
-            {years.map((year, i) => {
-              const base = i * YEAR_SPAN
+            {entries.map((p, i) => {
+              const x = i * ENTRY_GAP
+              const isActive = p.id === activeId
+              const newYear = i === 0 || entries[i - 1].year !== p.year
               return (
-                <div key={year}>
-                  {Array.from({ length: 12 }, (_, k) => k + 1).map((m) => {
-                    const x = base + (m - 1) * MONTH_GAP
-                    const active = projectMonths.has(`${year}-${m}`)
-                    return (
-                      <div key={m}>
-                        <div
-                          className={`absolute w-[2px] rounded-full ${
-                            active ? 'bg-zinc-500 dark:bg-zinc-300' : 'bg-zinc-300 dark:bg-zinc-600'
-                          }`}
-                          style={{ left: x, bottom: 12, height: 16 }}
-                        />
-                        {Array.from({ length: DOTS }, (_, d) => d + 1).map((d) => (
-                          <div
-                            key={d}
-                            className="absolute h-[2px] w-[2px] rounded-full bg-zinc-300 dark:bg-zinc-700"
-                            style={{ left: x + (d * MONTH_GAP) / (DOTS + 1), bottom: 11 }}
-                          />
-                        ))}
-                      </div>
-                    )
-                  })}
-                  <div
-                    className="absolute w-[3px] rounded-full bg-zinc-500 dark:bg-zinc-300"
-                    style={{ left: base + 12 * MONTH_GAP, bottom: 12, height: 30 }}
-                  />
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => setOffset(x)}
+                  className="absolute top-0 h-full w-8 -translate-x-1/2 cursor-pointer"
+                  style={{ left: x }}
+                  aria-label={`${p.title} · ${monthsFull[lang][p.month - 1]} ${p.year}`}
+                >
+                  {newYear && (
+                    <span
+                      className={`absolute top-1 left-1/2 -translate-x-1/2 text-[10px] font-semibold ${
+                        isActive ? 'text-amber-600 dark:text-amber-400' : 'text-zinc-400 dark:text-zinc-500'
+                      }`}
+                    >
+                      {p.year}
+                    </span>
+                  )}
                   <span
-                    className="absolute text-[10px] font-semibold text-zinc-400 dark:text-zinc-500"
-                    style={{ left: base + 12 * MONTH_GAP - 10, top: 2 }}
+                    className={`absolute top-[20px] left-1/2 -translate-x-1/2 text-[9px] leading-none whitespace-nowrap ${
+                      isActive ? 'font-semibold text-zinc-900 dark:text-zinc-100' : 'text-zinc-400 dark:text-zinc-500'
+                    }`}
                   >
-                    {year}
+                    {monthsFull[lang][p.month - 1]}
                   </span>
-                </div>
+                  <span
+                    className={`absolute bottom-[12px] left-1/2 h-4 w-[3px] -translate-x-1/2 rounded-full ${
+                      isActive ? 'bg-amber-500' : 'bg-zinc-500 dark:bg-zinc-300'
+                    }`}
+                  />
+                </button>
               )
             })}
           </div>
@@ -199,9 +214,9 @@ export default function Timeline({ projects, year, month, onChange }: Props) {
       </div>
 
       <div className="pb-3 text-center text-sm font-semibold tabular-nums">
-        {activeTick ? (
+        {activeEntry ? (
           <span>
-            {monthsFull[lang][activeTick.month - 1]} {activeTick.year}
+            {activeEntry.title} · {monthsFull[lang][activeEntry.month - 1]} {activeEntry.year}
           </span>
         ) : (
           <span className="text-zinc-300 dark:text-zinc-600">&nbsp;</span>

@@ -31,18 +31,17 @@ export default function App() {
     setMonth(p.month)
   }
 
-  const handleTimelineChange = (y: number, m: number) => {
-    setYear(y)
-    setMonth(m)
-    const list = projects.filter((p) => p.year === y && p.month === m)
-    setProjectId(list.length === 1 ? list[0].id : null)
+  const handleTimelineChange = (p: Project) => {
+    setYear(p.year)
+    setMonth(p.month)
+    setProjectId(p.id)
   }
 
   return (
     <div className="flex h-screen w-screen flex-col overflow-hidden bg-zinc-100 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
       <TopBar />
 
-      <div className="flex min-h-0 flex-1">
+      <div className="flex min-h-0 flex-1 flex-col md:flex-row">
         <Sidebar
           projects={projects}
           selectedId={projectId}
@@ -62,7 +61,7 @@ export default function App() {
         </main>
       </div>
 
-      <Timeline projects={projects} year={year} month={month} onChange={handleTimelineChange} />
+      <Timeline projects={projects} selectedId={projectId} onChange={handleTimelineChange} />
     </div>
   )
 }
