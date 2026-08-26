@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import type { Project } from '../data/projects'
 import { useSettings } from '../settings'
 import { monthsFull } from '../i18n'
@@ -23,6 +24,18 @@ const statusDot: Record<string, string> = {
 
 export default function ProjectDetail({ project }: { project: Project }) {
   const { t, lang } = useSettings()
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [videoReady, setVideoReady] = useState(false)
+
+  useEffect(() => {
+    if (!project.video) return
+    setVideoReady(false)
+    const video = videoRef.current
+    if (!video) return
+    video.pause()
+    video.currentTime = 0
+    video.load()
+  }, [project.id, project.video])
 
   return (
     <div className="flex min-h-full flex-col gap-4 p-6 md:h-full md:overflow-hidden">
@@ -30,16 +43,18 @@ export default function ProjectDetail({ project }: { project: Project }) {
         <div className="aspect-[16/10] overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 lg:flex lg:h-full lg:items-center lg:justify-center lg:aspect-auto">
           {project.video ? (
             <video
-              key={project.id}
+              ref={videoRef}
               src={project.video}
               controls
               preload="metadata"
               playsInline
-              className="h-full w-full object-cover object-center lg:object-contain"
+              onLoadedData={() => setVideoReady(true)}
+              className={`h-full w-full object-cover object-center transition-opacity lg:object-contain ${
+                videoReady ? 'opacity-100' : 'opacity-0'
+              }`}
             />
           ) : (
             <img
-              key={project.id}
               src={project.image}
               alt={project.title}
               loading="eager"
