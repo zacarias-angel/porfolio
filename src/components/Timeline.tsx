@@ -144,7 +144,7 @@ export default function Timeline({ projects, selectedId, onChange }: Props) {
   const activeId = activeEntry?.id ?? null
 
   return (
-    <section className="border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+    <section className="shrink-0 overflow-hidden border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
       <div className="flex items-center justify-between px-5 pt-3">
         <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400">{t('timeline')}</h2>
         <p className="text-[11px] text-zinc-400">{t('dragHint')}</p>

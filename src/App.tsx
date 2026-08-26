@@ -38,10 +38,10 @@ export default function App() {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-zinc-100 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+    <div className="flex h-dvh w-screen flex-col overflow-hidden bg-zinc-100 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
       <TopBar />
 
-      <div className="flex min-h-0 flex-1 flex-col md:flex-row">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:flex-row">
         <Sidebar
           projects={projects}
           selectedId={projectId}
@@ -50,7 +50,7 @@ export default function App() {
           onSelect={handleSelectProject}
         />
 
-        <main className="min-h-0 min-w-0 flex-1 overflow-y-auto md:overflow-hidden">
+        <main className="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden md:overflow-hidden">
           {selectedProject ? (
             <ProjectDetail project={selectedProject} />
           ) : monthProjects.length > 0 ? (
