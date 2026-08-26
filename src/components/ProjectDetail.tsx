@@ -25,23 +25,28 @@ export default function ProjectDetail({ project }: { project: Project }) {
   const { t, lang } = useSettings()
 
   return (
-    <div className="flex h-full flex-col gap-4 overflow-hidden p-6">
-      <div className="grid flex-1 gap-6 overflow-hidden lg:grid-cols-[1.1fr_1fr]">
-        <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+    <div className="flex min-h-full flex-col gap-4 p-6 md:h-full md:overflow-hidden">
+      <div className="grid gap-6 lg:h-full lg:grid-cols-[1.1fr_1fr] lg:overflow-hidden">
+        <div className="aspect-[16/10] overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 lg:h-full lg:aspect-auto">
           {project.video ? (
             <video
               src={project.video}
               controls
               preload="metadata"
               playsInline
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover object-center"
             />
           ) : (
-            <img src={project.image} alt={project.title} loading="eager" className="h-full w-full object-cover" />
+            <img
+              src={project.image}
+              alt={project.title}
+              loading="eager"
+              className="h-full w-full object-cover object-center"
+            />
           )}
         </div>
 
-        <div className="flex min-h-0 flex-col gap-4 overflow-y-auto pr-1">
+        <div className="flex flex-col gap-4 lg:min-h-0 lg:overflow-y-auto lg:pr-1">
           <div className="flex items-start justify-between gap-3">
             <div>
               <h1 className="text-2xl font-bold leading-tight">{project.title}</h1>

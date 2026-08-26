@@ -50,7 +50,7 @@ export default function App() {
           onSelect={handleSelectProject}
         />
 
-        <main className="min-w-0 flex-1">
+        <main className="min-h-0 min-w-0 flex-1 overflow-y-auto md:overflow-hidden">
           {selectedProject ? (
             <ProjectDetail project={selectedProject} />
           ) : monthProjects.length > 0 ? (
@@ -80,7 +80,7 @@ function MonthList({
   const { t, lang } = useSettings()
 
   return (
-    <div className="flex h-full flex-col gap-4 overflow-hidden p-6">
+    <div className="flex min-h-full flex-col gap-4 p-6 md:h-full md:overflow-hidden">
       <div>
         <h1 className="text-lg font-bold">
           {monthsFull[lang][month - 1]} {year}
@@ -90,7 +90,7 @@ function MonthList({
         </p>
       </div>
 
-      <div className="grid flex-1 auto-rows-min grid-cols-1 gap-3 overflow-y-auto pr-1 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="grid auto-rows-min grid-cols-1 gap-3 sm:grid-cols-2 md:flex-1 md:overflow-y-auto md:pr-1 xl:grid-cols-3">
         {projects.map((p) => (
           <button
             key={p.id}
@@ -115,7 +115,7 @@ function EmptyState() {
   const { t } = useSettings()
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
+    <div className="flex min-h-full flex-col items-center justify-center gap-3 p-6 text-center md:h-full">
       <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-200 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
         <FolderOpen className="h-6 w-6" />
       </div>
