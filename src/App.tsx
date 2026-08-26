@@ -97,7 +97,7 @@ function MonthList({
             onClick={() => onSelect(p)}
             className="group flex items-center gap-3 overflow-hidden rounded-xl border border-zinc-200 bg-white text-left transition-all hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
           >
-            <img src={p.image} alt="" className="h-16 w-20 shrink-0 object-cover" />
+            <img src={p.image} alt="" loading="lazy" decoding="async" className="h-16 w-20 shrink-0 object-cover" />
             <div className="min-w-0 flex-1 p-2">
               <p className="truncate text-sm font-semibold group-hover:text-amber-500 dark:group-hover:text-amber-300">
                 {p.title}

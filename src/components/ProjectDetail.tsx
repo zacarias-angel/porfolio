@@ -28,7 +28,17 @@ export default function ProjectDetail({ project }: { project: Project }) {
     <div className="flex h-full flex-col gap-4 overflow-hidden p-6">
       <div className="grid flex-1 gap-6 overflow-hidden lg:grid-cols-[1.1fr_1fr]">
         <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
-          <img src={project.image} alt={project.title} className="h-full w-full object-cover" />
+          {project.video ? (
+            <video
+              src={project.video}
+              controls
+              preload="metadata"
+              playsInline
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <img src={project.image} alt={project.title} loading="eager" className="h-full w-full object-cover" />
+          )}
         </div>
 
         <div className="flex min-h-0 flex-col gap-4 overflow-y-auto pr-1">

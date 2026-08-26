@@ -9,6 +9,7 @@ export type Project = {
   tags: string[]
   status: ProjectStatus
   image: string
+  video?: string
   url?: string
   homepage?: string
 }
@@ -127,6 +128,20 @@ export const projects: Project[] = [
     url: 'https://github.com/zacarias-angel/ccmotors',
   },
   {
+    id: 'roblox-navidad',
+    title: 'Roblox Navidad',
+    description: {
+      es: 'Juego multijugador en Roblox ambientado en un mapa navideno, con oleadas de enemigos y un sistema de busqueda de objetos para sostener el ritmo de la partida. Un proyecto enfocado en combinar combate, exploracion y ambientacion tematica dentro de una experiencia cooperativa.',
+      en: 'Multiplayer Roblox game set in a Christmas-themed map, featuring enemy waves and an item search system to keep matches moving. A project focused on blending combat, exploration, and thematic world-building into a cooperative experience.',
+    },
+    year: 2024,
+    month: 12,
+    tags: ['Lua', 'Roblox', 'Multiplayer'],
+    status: 'completed',
+    image: img('roblox-navidad'),
+    video: 'https://media.angelzacarias.uk/projects/porfolio/robloxnavidad.mp4',
+  },
+  {
     id: 'lensstudio-camerakit',
     title: 'Lens Studio Camera Kit',
     description: {
@@ -158,14 +173,15 @@ export const projects: Project[] = [
     id: 'tewun-ropa',
     title: 'Tewun Ropa',
     description: {
-      es: 'Tienda de ropa montada en Shopify para la marca Tewun. Colecciones, vitrina y orden del catálogo para mostrar cada temporada.',
-      en: 'Clothing store built on Shopify for the Tewun brand. Collections, storefront and catalog organization to showcase each season.',
+      es: 'Tienda online desarrollada en Shopify para la marca Tewun, con trabajo sobre colecciones, estructura de catalogo y presentacion visual de temporada. Ademas del armado comercial, implico personalizacion del tema con Liquid, el lenguaje de plantillas de Shopify, para adaptar la experiencia a la identidad de la marca.',
+      en: 'Online store developed on Shopify for the Tewun brand, with work on collections, catalog structure, and seasonal visual presentation. Beyond the storefront setup, it included theme customization with Liquid, Shopify\'s templating language, to adapt the experience to the brand identity.',
     },
     year: 2025,
     month: 4,
-    tags: ['Shopify', 'Ecommerce'],
+    tags: ['Shopify', 'Liquid', 'Ecommerce'],
     status: 'completed',
     image: img('tewun-ropa'),
+    video: 'https://media.angelzacarias.uk/projects/porfolio/preview.mp4',
   },
   {
     id: 'filtro-effect-house',
@@ -311,14 +327,15 @@ export const projects: Project[] = [
     id: 'totem-mundial-bermuda',
     title: 'Tótem Mundial Bermuda 2026',
     description: {
-      es: 'Tótem digital para el Mundial Bermuda 2026. Una instalación web con agenda, resultados y pantallas para un evento en vivo.',
-      en: 'Digital totem for the Bermuda 2026 World Cup. A web installation with schedule, results and screens for a live event.',
+      es: 'Aplicacion web para una experiencia de Mundial 2026 con tres frentes conectados: totem vertical para evento, modulo mobile para pronosticos y panel admin para operacion en tiempo real. Construida con Next.js, TypeScript y Supabase, integrando ranking, resultados en vivo, QR, preguntas interactivas y flujos pensados para uso presencial.',
+      en: 'Web application for a 2026 World Cup experience with three connected fronts: a vertical event totem, a mobile predictions module, and an admin panel for real-time operations. Built with Next.js, TypeScript, and Supabase, integrating rankings, live results, QR flows, interactive questions, and features designed for in-person use.',
     },
     year: 2026,
     month: 6,
-    tags: ['TypeScript', 'React'],
+    tags: ['Next.js', 'TypeScript', 'React', 'Supabase', 'TailwindCSS'],
     status: 'completed',
     image: img('totem-mundial-bermuda'),
+    video: 'https://media.angelzacarias.uk/projects/porfolio/totem.mp4',
     url: 'https://github.com/zacarias-angel/totemMundialBermuda2026',
     homepage: 'https://totem-mundial-bermuda2026.vercel.app',
   },
@@ -354,14 +371,14 @@ export const projects: Project[] = [
     id: 'servidor-vps-coolify',
     title: 'Servidor VPS + Coolify',
     description: {
-      es: 'Servidor propio con Docker y Coolify detrás de un VPS con IP compartida. Resuelve NAT, dominios y SSL para desplegar proyectos sin puertos raros.',
-      en: 'Self-hosted server with Docker and Coolify behind a shared-IP VPS. Solves NAT, domains and SSL to deploy projects without weird ports.',
+      es: 'Infraestructura autogestionada sobre un VPS propio, con Docker y Coolify, preparada para publicar proyectos con dominios, SSL y routing estable incluso sobre IP compartida. Un montaje que exigio tiempo, criterio tecnico y comprension real del despliegue en produccion.',
+      en: 'Self-managed infrastructure on a personal VPS, powered by Docker and Coolify, set up to publish projects with domains, SSL, and stable routing even behind a shared IP. A setup that required time, technical judgment, and a real understanding of production deployment.',
     },
     year: 2026,
     month: 7,
     tags: ['Docker', 'Coolify', 'Nginx', 'Cloudflare'],
     status: 'active',
-    image: img('servidor-vps-coolify'),
+    image: 'https://media.angelzacarias.uk/projects/porfolio/coolify.jpg',
   },
   {
     id: 'gestor-servidores',
@@ -380,13 +397,14 @@ export const projects: Project[] = [
     id: 'hermes-ia',
     title: 'Hermes — Asistente IA',
     description: {
-      es: 'Asistente agente estilo Hermes: un ayudante de IA para automatizar tareas repetitivas. Lo arrancamos mañana.',
-      en: 'Hermes-style AI assistant agent: an AI helper to automate repetitive tasks. Starting tomorrow.',
+      es: 'Asistente personal de voz y texto desplegado en un VPS con Docker y Coolify, pensado para usarse desde un celular Android en modo kiosko. Combina un backend en Python con FastAPI, un frontend en React y TypeScript, y acciones conectadas por MQTT para extender la IA hacia automatizacion fisica y tareas del mundo real.',
+      en: 'Personal voice and text assistant deployed on a VPS with Docker and Coolify, designed to run on an Android phone in kiosk mode. It combines a Python backend with FastAPI, a React and TypeScript frontend, and MQTT-connected actions to extend the AI into physical automation and real-world tasks.',
     },
     year: 2026,
     month: 8,
-    tags: ['TypeScript', 'IA', 'Agente'],
+    tags: ['Python', 'FastAPI', 'React', 'TypeScript', 'MQTT', 'Docker', 'Coolify'],
     status: 'planned',
     image: img('hermes-ia'),
+    url: 'https://github.com/zacarias-angel/compa',
   },
 ]
