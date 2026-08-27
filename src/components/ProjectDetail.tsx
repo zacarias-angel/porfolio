@@ -43,6 +43,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
         <div className="aspect-[16/10] overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 lg:flex lg:h-full lg:items-center lg:justify-center lg:aspect-auto">
           {project.video ? (
             <video
+              key={project.video}
               ref={videoRef}
               src={project.video}
               controls
@@ -55,6 +56,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
             />
           ) : (
             <img
+              key={project.image}
               src={project.image}
               alt={project.title}
               loading="eager"
