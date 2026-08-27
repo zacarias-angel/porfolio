@@ -2,7 +2,7 @@ export type Lang = 'es' | 'en'
 
 export const translations = {
   es: {
-    title: 'Porfolio',
+    title: 'Zacarias Angel',
     subtitle: 'Panel de proyectos',
     projects: 'Proyectos',
     project: 'proyecto',
@@ -31,7 +31,7 @@ export const translations = {
     period: 'Periodo',
   },
   en: {
-    title: 'Portfolio',
+    title: 'Zacarias Angel',
     subtitle: 'Project dashboard',
     projects: 'Projects',
     project: 'project',

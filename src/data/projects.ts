@@ -181,7 +181,7 @@ export const projects: Project[] = [
     tags: ['Shopify', 'Liquid', 'Ecommerce'],
     status: 'completed',
     image: img('tewun-ropa'),
-    video: 'https://media.angelzacarias.uk/projects/porfolio/preview.mp4',
+    video: 'https://media.angelzacarias.uk/projects/porfolio/tewun.mp4',
   },
   {
     id: 'filtro-effect-house',
