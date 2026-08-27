@@ -269,16 +269,17 @@ export const projects: Project[] = [
   },
   {
     id: 'google-site',
-    title: 'Google Site',
+    title: 'Woolworths Australia',
     description: {
-      es: 'Sitio pensado para incrustarse en Google Sites. Un bloque autónomo que suma una sección interactiva a una página existente.',
-      en: 'Site built to embed into Google Sites. A self-contained block that adds an interactive section to an existing page.',
+      es: 'Intranet interna desarrollada para Woolworths Australia utilizando Google Sites. El proyecto organiza la información en 15 secciones y conecta cada área con enlaces a sistemas externos, creando un punto de acceso centralizado para la consulta de recursos y herramientas corporativas.',
+      en: 'Internal intranet developed for Woolworths Australia using Google Sites. The project organizes information into 15 sections and connects each area to external systems, creating a centralized access point for corporate resources and tools.',
     },
     year: 2025,
     month: 11,
-    tags: ['HTML', 'CSS', 'JavaScript'],
+    tags: ['Google Sites', 'Intranet', 'Information Architecture'],
     status: 'completed',
     image: img('google-site'),
+    video: 'https://media.angelzacarias.uk/projects/porfolio/ww.mp4',
     url: 'https://github.com/zacarias-angel/googleSite',
   },
   {
@@ -322,7 +323,6 @@ export const projects: Project[] = [
     tags: ['Lua', 'Roblox'],
     status: 'active',
     image: img('mundos-roblox'),
-    video: 'https://media.angelzacarias.uk/projects/porfolio/ww.mp4',
     url: 'https://github.com/zacarias-angel/mundosRoblox',
   },
   {
@@ -381,19 +381,6 @@ export const projects: Project[] = [
     tags: ['Docker', 'Coolify', 'Nginx', 'Cloudflare'],
     status: 'active',
     image: 'https://media.angelzacarias.uk/projects/porfolio/coolify.jpg',
-  },
-  {
-    id: 'gestor-servidores',
-    title: 'Gestor de Servidores',
-    description: {
-      es: 'Panel de administración de servicios para un VPS, orientado a centralizar despliegues, dominios y monitoreo. El proyecto trabaja con Docker, Linux y Coolify como base para operar aplicaciones y servicios desde una infraestructura propia.',
-      en: 'VPS service administration panel focused on centralizing deployments, domains, and monitoring. The project uses Docker, Linux, and Coolify as the foundation for operating applications and services on self-managed infrastructure.',
-    },
-    year: 2026,
-    month: 7,
-    tags: ['Docker', 'Linux', 'Coolify'],
-    status: 'active',
-    image: img('gestor-servidores'),
   },
   {
     id: 'hermes-ia',
