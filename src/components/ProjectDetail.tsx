@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { Project } from '../data/projects'
 import { useSettings } from '../settings'
 import { monthsFull } from '../i18n'
-import { CalendarDays, ExternalLink, Layers, FileText } from 'lucide-react'
+import { CalendarDays, ChevronLeft, ChevronRight, ExternalLink, Layers, FileText } from 'lucide-react'
 
 const statusKey = {
   completed: 'statusCompleted',
@@ -26,6 +26,8 @@ export default function ProjectDetail({ project }: { project: Project }) {
   const { t, lang } = useSettings()
   const videoRef = useRef<HTMLVideoElement>(null)
   const [videoReady, setVideoReady] = useState(false)
+  const [imageIndex, setImageIndex] = useState(0)
+  const images = project.images ?? [project.image]
 
   useEffect(() => {
     if (!project.video) return
@@ -36,6 +38,12 @@ export default function ProjectDetail({ project }: { project: Project }) {
     video.currentTime = 0
     video.load()
   }, [project.id, project.video])
+
+  useEffect(() => setImageIndex(0), [project.id])
+
+  const changeImage = (direction: -1 | 1) => {
+    setImageIndex((index) => (index + direction + images.length) % images.length)
+  }
 
   return (
     <div className="flex min-h-full flex-col gap-4 p-6 md:h-full md:overflow-hidden">
@@ -55,13 +63,46 @@ export default function ProjectDetail({ project }: { project: Project }) {
               }`}
             />
           ) : (
-            <img
-              key={project.image}
-              src={project.image}
-              alt={project.title}
-              loading="eager"
-              className="h-full w-full object-cover object-center lg:object-contain"
-            />
+            <div className="relative h-full w-full">
+              <img
+                key={images[imageIndex]}
+                src={images[imageIndex]}
+                alt={project.title}
+                loading="eager"
+                className="h-full w-full object-cover object-center lg:object-contain"
+              />
+              {images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => changeImage(-1)}
+                    aria-label="Imagen anterior"
+                    className="absolute top-1/2 left-3 -translate-y-1/2 rounded-full bg-black/55 p-2 text-white transition-colors hover:bg-black/75"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => changeImage(1)}
+                    aria-label="Imagen siguiente"
+                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full bg-black/55 p-2 text-white transition-colors hover:bg-black/75"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                  <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
+                    {images.map((image, index) => (
+                      <button
+                        key={image}
+                        type="button"
+                        onClick={() => setImageIndex(index)}
+                        aria-label={`Ver imagen ${index + 1}`}
+                        className={`h-2 w-2 rounded-full ${index === imageIndex ? 'bg-white' : 'bg-white/50'}`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
           )}
         </div>
 

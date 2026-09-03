@@ -9,6 +9,7 @@ export type Project = {
   tags: string[]
   status: ProjectStatus
   image: string
+  images?: string[]
   video?: string
   url?: string
   homepage?: string
@@ -395,5 +396,23 @@ export const projects: Project[] = [
     status: 'planned',
     image: img('hermes-ia'),
     url: 'https://github.com/zacarias-angel/compa',
+  },
+  {
+    id: 'lafim',
+    title: 'LAFIM - Plataforma de Gestión de Liga',
+    description: {
+      es: 'Arquitectura de una plataforma web mobile-first para digitalizar la gestión de la Liga Amateur de Fútbol Infantil de Moreno. El MVP reemplaza las planillas manuales mediante un sitio público y paneles por rol para clubes y administración: gestión de torneos, fechas, partidos, jugadores y noticias; carga y validación cruzada de resultados; cálculo automático de posiciones y auditoría de acciones. La solución se proyectó con frontend en Next.js, API REST en Laravel con Sanctum, MySQL aislado en red Docker y despliegue en VPS mediante Coolify, Cloudflare, HTTPS y copias de seguridad automatizadas.',
+      en: 'Architecture for a mobile-first web platform that digitizes management for the Liga Amateur de Fútbol Infantil de Moreno. The MVP replaces manual spreadsheets with a public site and role-based panels for clubs and league administrators: tournament, fixture, match, player, and news management; result entry and cross-validation; automatic standings calculation; and activity auditing. The solution is designed with a Next.js frontend, a Laravel REST API secured with Sanctum, MySQL isolated on a Docker network, and VPS deployment through Coolify, Cloudflare, HTTPS, and automated backups.',
+    },
+    year: 2026,
+    month: 8,
+    tags: ['Next.js', 'React', 'TypeScript', 'Laravel', 'PHP', 'REST API', 'Sanctum', 'MySQL', 'Docker', 'Coolify', 'Cloudflare'],
+    status: 'planned',
+    image: 'https://media.angelzacarias.uk/projects/porfolio/lafim.jpg',
+    images: [
+      'https://media.angelzacarias.uk/projects/porfolio/lafim.jpg',
+      'https://media.angelzacarias.uk/projects/porfolio/lafimmobil.jpg',
+    ],
+    url: 'https://github.com/zacarias-angel/lafim',
   },
 ]
