@@ -155,7 +155,6 @@ export const projects: Project[] = [
     status: 'completed',
     image: img('lensstudio-camerakit'),
     url: 'https://github.com/zacarias-angel/lensStudioCameraKit',
-    homepage: 'https://lens-studio-camera-kit.vercel.app',
   },
   {
     id: 'globa-experience',
@@ -319,7 +318,6 @@ export const projects: Project[] = [
     status: 'completed',
     image: img('sensores-web-ar'),
     url: 'https://github.com/zacarias-angel/sensoresWebAR',
-    homepage: 'https://sensores-web-ar.vercel.app',
   },
   {
     id: 'mundos-roblox',
@@ -354,7 +352,6 @@ export const projects: Project[] = [
     image: img('totem-mundial-bermuda'),
     video: 'https://media.angelzacarias.uk/projects/porfolio/totem.mp4',
     url: 'https://github.com/zacarias-angel/totemMundialBermuda2026',
-    homepage: 'https://totem-mundial-bermuda2026.vercel.app',
   },
   {
     id: 'video-360',

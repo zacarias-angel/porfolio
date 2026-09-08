@@ -6,6 +6,7 @@ import TopBar from './components/TopBar'
 import Sidebar from './components/Sidebar'
 import ProjectDetail from './components/ProjectDetail'
 import Timeline from './components/Timeline'
+import Introduction from './components/Introduction'
 import { CalendarDays, FolderOpen } from 'lucide-react'
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
   const [year, setYear] = useState<number | null>(null)
   const [month, setMonth] = useState<number | null>(null)
   const [projectId, setProjectId] = useState<string | null>(null)
+  const [view, setView] = useState<'introduction' | 'projects'>('introduction')
 
   const selectedProject = useMemo(
     () => projects.find((p) => p.id === projectId) ?? null,
@@ -26,6 +28,7 @@ export default function App() {
   }, [year, month])
 
   const handleSelectProject = (p: Project) => {
+    setView('projects')
     setProjectId(p.id)
     setYear(p.year)
     setMonth(p.month)
@@ -39,29 +42,35 @@ export default function App() {
 
   return (
     <div className="flex h-dvh w-screen flex-col overflow-hidden bg-zinc-100 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
-      <TopBar />
+      <TopBar compact={view === 'introduction'} onHome={() => setView('introduction')} />
 
-      <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:flex-row">
-        <Sidebar
-          projects={projects}
-          selectedId={projectId}
-          year={year}
-          month={month}
-          onSelect={handleSelectProject}
-        />
+      {view === 'introduction' ? (
+        <Introduction onViewTimeline={() => setView('projects')} />
+      ) : (
+        <>
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:flex-row">
+            <Sidebar
+              projects={projects}
+              selectedId={projectId}
+              year={year}
+              month={month}
+              onSelect={handleSelectProject}
+            />
 
-        <main className="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden md:overflow-hidden">
-          {selectedProject ? (
-            <ProjectDetail project={selectedProject} />
-          ) : monthProjects.length > 0 ? (
-            <MonthList projects={monthProjects} year={year!} month={month!} onSelect={handleSelectProject} />
-          ) : (
-            <EmptyState />
-          )}
-        </main>
-      </div>
+            <main className="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden md:overflow-hidden">
+              {selectedProject ? (
+                <ProjectDetail project={selectedProject} />
+              ) : monthProjects.length > 0 ? (
+                <MonthList projects={monthProjects} year={year!} month={month!} onSelect={handleSelectProject} />
+              ) : (
+                <EmptyState />
+              )}
+            </main>
+          </div>
 
-      <Timeline projects={projects} selectedId={projectId} onChange={handleTimelineChange} />
+          <Timeline projects={projects} selectedId={projectId} onChange={handleTimelineChange} />
+        </>
+      )}
     </div>
   )
 }
