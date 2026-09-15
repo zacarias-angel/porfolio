@@ -252,14 +252,15 @@ export const projects: Project[] = [
     id: 'z3d-website',
     title: 'Z3D Website',
     description: {
-      es: 'Sitio con escenas 3D interactivas. Exploración de modelos y transiciones suaves como carta de presentación técnica.',
-      en: 'Site with interactive 3D scenes. Model exploration and smooth transitions as a technical calling card.',
+      es: 'Sitio web desarrollado a medida para un cliente dedicado a la venta de productos de impresión 3D. La plataforma combina un frontend en React con un backend en PHP, PDO y MySQL para administrar la información de forma segura y eficiente. Incluye un panel administrativo completo desde el que se pueden crear, consultar, modificar y eliminar productos, facilitando la gestión diaria del catálogo.',
+      en: 'Custom website developed for a client specializing in the sale of 3D-printed products. The platform combines a React frontend with a PHP, PDO, and MySQL backend to manage information securely and efficiently. It includes a complete administration panel for creating, viewing, updating, and deleting products, simplifying the day-to-day management of the catalog.',
     },
     year: 2025,
     month: 8,
-    tags: ['TypeScript', 'Three.js'],
+    tags: ['React', 'TypeScript', 'PHP', 'PDO', 'MySQL', 'Admin Panel'],
     status: 'completed',
     image: img('z3d-website'),
+    video: 'https://media.angelzacarias.uk/projects/porfolio/z3d.mp4',
     url: 'https://github.com/zacarias-angel/Z3d-webSite',
   },
   {
@@ -444,5 +445,23 @@ export const projects: Project[] = [
       'https://media.angelzacarias.uk/projects/porfolio/lafimmobil.jpg',
     ],
     url: 'https://github.com/zacarias-angel/lafim',
+  },
+  {
+    id: 'bofa-boston-marathon',
+    title: 'BOFA Boston Marathon',
+    description: {
+      es: 'Experiencia interactiva de projection mapping desarrollada para BOFA durante la Boston Marathon. La solución integró frontend, backend, códigos QR y comunicación en tiempo real sobre infraestructura de AWS: los usuarios escaneaban un QR y, mediante interacciones desde sus dispositivos, activaban distintas animaciones proyectadas en el espacio. Tuve el agrado de participar en la realización del frontend, creando la interfaz que conectó la experiencia móvil con el sistema de mapping en tiempo real.',
+      en: 'Interactive projection-mapping experience developed for BOFA during the Boston Marathon. The solution brought together frontend, backend, QR codes, and real-time communication on AWS infrastructure: users scanned a QR code and used their devices to trigger different animations projected in the space. I had the pleasure of contributing to the frontend, creating the interface that connected the mobile experience to the real-time mapping system.',
+    },
+    year: 2026,
+    month: 4,
+    tags: ['React', 'TypeScript', 'AWS', 'WebSocket', 'ECS Fargate', 'Real-time', 'Projection Mapping', 'Route 53', 'ALB', 'ACM'],
+    status: 'completed',
+    image: 'https://media.angelzacarias.uk/projects/porfolio/bofa1.webp',
+    images: [
+      'https://media.angelzacarias.uk/projects/porfolio/bofa1.webp',
+      'https://media.angelzacarias.uk/projects/porfolio/bofa2.webp',
+      'https://media.angelzacarias.uk/projects/porfolio/bofa3.webp',
+    ],
   },
 ]
