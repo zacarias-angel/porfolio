@@ -18,7 +18,9 @@ const statusDot: Record<string, string> = {
 
 export default function Sidebar({ projects, selectedId, year, month, onSelect }: Props) {
   const { t, lang } = useSettings()
-  const orderedProjects = [...projects].reverse()
+  const orderedProjects = [...projects].sort(
+    (a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || b.year - a.year || b.month - a.month,
+  )
 
   return (
     <aside className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 md:flex md:w-72 md:shrink-0 md:flex-col md:border-b-0 md:border-r">

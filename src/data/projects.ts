@@ -8,6 +8,7 @@ export type Project = {
   month: number
   tags: string[]
   status: ProjectStatus
+  featured?: boolean
   image: string
   images?: string[]
   video?: string
@@ -457,6 +458,7 @@ export const projects: Project[] = [
     month: 4,
     tags: ['React', 'TypeScript', 'AWS', 'WebSocket', 'ECS Fargate', 'Real-time', 'Projection Mapping', 'Route 53', 'ALB', 'ACM'],
     status: 'completed',
+    featured: true,
     image: 'https://media.angelzacarias.uk/projects/porfolio/bofa1.webp',
     images: [
       'https://media.angelzacarias.uk/projects/porfolio/bofa1.webp',
