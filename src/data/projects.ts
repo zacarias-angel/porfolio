@@ -8,7 +8,6 @@ export type Project = {
   month: number
   tags: string[]
   status: ProjectStatus
-  featured?: boolean
   image: string
   images?: string[]
   video?: string
@@ -322,6 +321,24 @@ export const projects: Project[] = [
     url: 'https://github.com/zacarias-angel/sensoresWebAR',
   },
   {
+    id: 'bofa-boston-marathon',
+    title: 'BOFA Boston Marathon',
+    description: {
+      es: 'Experiencia interactiva de projection mapping desarrollada para BOFA durante la Boston Marathon. La solución integró frontend, backend, códigos QR y comunicación en tiempo real sobre infraestructura de AWS: los usuarios escaneaban un QR y, mediante interacciones desde sus dispositivos, activaban distintas animaciones proyectadas en el espacio. Tuve el agrado de participar en la realización del frontend, creando la interfaz que conectó la experiencia móvil con el sistema de mapping en tiempo real.',
+      en: 'Interactive projection-mapping experience developed for BOFA during the Boston Marathon. The solution brought together frontend, backend, QR codes, and real-time communication on AWS infrastructure: users scanned a QR code and used their devices to trigger different animations projected in the space. I had the pleasure of contributing to the frontend, creating the interface that connected the mobile experience to the real-time mapping system.',
+    },
+    year: 2026,
+    month: 4,
+    tags: ['React', 'TypeScript', 'AWS', 'WebSocket', 'ECS Fargate', 'Real-time', 'Projection Mapping', 'Route 53', 'ALB', 'ACM'],
+    status: 'completed',
+    image: 'https://media.angelzacarias.uk/projects/porfolio/bofa1.webp',
+    images: [
+      'https://media.angelzacarias.uk/projects/porfolio/bofa1.webp',
+      'https://media.angelzacarias.uk/projects/porfolio/bofa2.webp',
+      'https://media.angelzacarias.uk/projects/porfolio/bofa3.webp',
+    ],
+  },
+  {
     id: 'mundos-roblox',
     title: 'Mundos Roblox',
     description: {
@@ -446,24 +463,5 @@ export const projects: Project[] = [
       'https://media.angelzacarias.uk/projects/porfolio/lafimmobil.jpg',
     ],
     url: 'https://github.com/zacarias-angel/lafim',
-  },
-  {
-    id: 'bofa-boston-marathon',
-    title: 'BOFA Boston Marathon',
-    description: {
-      es: 'Experiencia interactiva de projection mapping desarrollada para BOFA durante la Boston Marathon. La solución integró frontend, backend, códigos QR y comunicación en tiempo real sobre infraestructura de AWS: los usuarios escaneaban un QR y, mediante interacciones desde sus dispositivos, activaban distintas animaciones proyectadas en el espacio. Tuve el agrado de participar en la realización del frontend, creando la interfaz que conectó la experiencia móvil con el sistema de mapping en tiempo real.',
-      en: 'Interactive projection-mapping experience developed for BOFA during the Boston Marathon. The solution brought together frontend, backend, QR codes, and real-time communication on AWS infrastructure: users scanned a QR code and used their devices to trigger different animations projected in the space. I had the pleasure of contributing to the frontend, creating the interface that connected the mobile experience to the real-time mapping system.',
-    },
-    year: 2026,
-    month: 4,
-    tags: ['React', 'TypeScript', 'AWS', 'WebSocket', 'ECS Fargate', 'Real-time', 'Projection Mapping', 'Route 53', 'ALB', 'ACM'],
-    status: 'completed',
-    featured: true,
-    image: 'https://media.angelzacarias.uk/projects/porfolio/bofa1.webp',
-    images: [
-      'https://media.angelzacarias.uk/projects/porfolio/bofa1.webp',
-      'https://media.angelzacarias.uk/projects/porfolio/bofa2.webp',
-      'https://media.angelzacarias.uk/projects/porfolio/bofa3.webp',
-    ],
   },
 ]

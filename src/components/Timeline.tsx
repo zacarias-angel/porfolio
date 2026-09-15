@@ -58,9 +58,7 @@ export default function Timeline({ projects, selectedId, onChange }: Props) {
   useLayoutEffect(() => {
     if (viewW === 0 || initializedRef.current) return
     initializedRef.current = true
-    if (entries.length === 0) return
-    const featuredIndex = entries.findIndex((entry) => entry.featured)
-    setOffset((featuredIndex >= 0 ? featuredIndex : entries.length - 1) * ENTRY_GAP)
+    if (entries.length > 0) setOffset((entries.length - 1) * ENTRY_GAP)
   }, [viewW, entries, setOffset])
 
   const activeEntry = useMemo(() => {
