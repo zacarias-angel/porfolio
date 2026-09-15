@@ -374,16 +374,17 @@ export const projects: Project[] = [
   },
   {
     id: 'video-360',
-    title: 'Video 360',
+    title: 'Las Tres Niñas - Experiencia AR 360°',
     description: {
-      es: 'Reproductor de video 360°: mirá en cualquier dirección mientras el video avanza. Exploración de video inmersivo en el navegador.',
-      en: '360° video player: look in any direction while the video plays. Exploring immersive video in the browser.',
+      es: 'Experiencia de marca en realidad aumentada desarrollada para Las Tres Niñas. El acceso se realiza escaneando un código QR impreso en el packaging, que conecta al usuario con un entorno 360° interactivo y accesible directamente desde el navegador. La experiencia fue creada con Zappar Studio y tecnologías WebXR, utilizando JavaScript como lenguaje principal y Three.js para construir y controlar el contenido inmersivo.',
+      en: 'Augmented reality brand experience developed for Las Tres Niñas. Users access it by scanning a QR code printed on the packaging, which connects them to an interactive 360° environment directly in the browser. The experience was created with Zappar Studio and WebXR technologies, using JavaScript as the main language and Three.js to build and control the immersive content.',
     },
     year: 2026,
     month: 7,
-    tags: ['TypeScript', 'WebXR', 'Three.js'],
-    status: 'active',
+    tags: ['Zappar Studio', 'WebXR', 'JavaScript', 'Three.js', 'AR', '360°', 'QR'],
+    status: 'completed',
     image: img('video-360'),
+    video: 'https://media.angelzacarias.uk/projects/porfolio/tresninas.mp4',
     url: 'https://github.com/zacarias-angel/video360',
   },
   {

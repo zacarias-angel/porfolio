@@ -48,7 +48,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
   return (
     <div className="flex min-h-full flex-col gap-4 p-6 md:h-full md:overflow-hidden">
       <div className="grid gap-6 lg:h-full lg:grid-cols-[1.1fr_1fr] lg:overflow-hidden">
-        <div className="aspect-[16/10] overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 lg:flex lg:h-full lg:items-center lg:justify-center lg:aspect-auto">
+        <div className="aspect-[16/10] overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-950 dark:border-zinc-800 lg:flex lg:h-full lg:items-center lg:justify-center lg:aspect-auto">
           {project.video ? (
             <video
               key={project.video}
@@ -58,7 +58,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
               preload="metadata"
               playsInline
               onLoadedData={() => setVideoReady(true)}
-              className={`h-full w-full object-cover object-center transition-opacity lg:object-contain ${
+              className={`h-full w-full object-contain object-center transition-opacity ${
                 videoReady ? 'opacity-100' : 'opacity-0'
               }`}
             />
@@ -69,7 +69,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
                 src={images[imageIndex]}
                 alt={project.title}
                 loading="eager"
-                className="h-full w-full object-cover object-center lg:object-contain"
+                className="h-full w-full object-contain object-center"
               />
               {images.length > 1 && (
                 <>
